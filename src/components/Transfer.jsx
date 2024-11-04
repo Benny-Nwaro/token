@@ -1,6 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
-// import { Principal } from "@dfinity/principal";
-// import { token } from "../../../declarations/token";
+import { getServer } from "../util";
+import { useSelector, useDispatch } from 'react-redux';
+
 
 function Transfer() {
   const [recipientId, setId] = useState("");
@@ -8,17 +10,24 @@ function Transfer() {
   const [isHidden, setHidden] = useState(true);
   const [feedback, setFeedback] = useState("");
   const [isDisabled, setDisable] = useState(false);
+  const auth = useSelector((state) => state.auth);
+  const id = auth.user._id
+
 
   async function handleClick() {
-    // setHidden(true);
-    // setDisable(true);
-    // const recipient = Principal.fromText(recipientId);
-    // const amountToTransfer = Number(amount);
-
-    // const result = await token.transfer(recipient, amountToTransfer);
-    // setFeedback(result);
-    // setHidden(false);
-    // setDisable(false);
+    setHidden(true);
+    setDisable(true);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const userData = {senderId: id,receiverId: recipientId, transferAmount: Number(amount) }
+    const result = await axios.post(`${getServer()}/transfer`, userData, config)
+    console.log(result)
+    setFeedback(result.data.msg);
+    setHidden(false);
+    setDisable(false);
   }
 
   return (
