@@ -22,10 +22,19 @@ const userName = auth.user.name
 
 
   async function handleClick(event) {
-    const res = await axios.get(`${getServer()}/transaction/${id}`)
-    console.log(res.data.msg)
-    setDisable(true);  
-    setText(res.data.msg);
+    try {
+      if(id != undefined){
+        const res = await axios.get(`${getServer()}/transaction/${id}`)
+        console.log(res.data.msg)
+        setDisable(true);  
+        setText(res.data.msg);
+      }
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+   
   }
   useEffect(()=>{
     async function updateData(){

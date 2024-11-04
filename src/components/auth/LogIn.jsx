@@ -13,7 +13,6 @@ const Login = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const errors = useSelector((state) => state.auth.errors);
 
-  const redirect = "/home";
   
   useEffect(() => {
     if (errors && errors.length > 0) {
@@ -30,8 +29,8 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
      dispatch(login({ email, password }));
-    if(isAuthenticated){
-      navigate(redirect, { replace: true });
+    if(localStorage.token){
+      navigate('/home', { replace: true })
 
     }
   };
