@@ -4,7 +4,7 @@ import {jwtDecode} from "jwt-decode";
 const isDevelopment = window.location.hostname.includes("localhost");
 
 const getServer = () =>{
-   return isDevelopment ? "http://localhost:5000" : "https://vend-app-server.vercel.app/";
+   return isDevelopment ? "https://vend-app-server-7f6h.vercel.app" : "https://vend-app-server-7f6h.vercel.app"; 
 }
 const decodeUser = () => {
    const token = localStorage.getItem("token");

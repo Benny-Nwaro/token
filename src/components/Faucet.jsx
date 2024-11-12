@@ -22,10 +22,19 @@ const userName = auth.user.name
 
 
   async function handleClick(event) {
-    const res = await axios.get(`${getServer()}/transaction/${id}`)
-    console.log(res.data.msg)
-    setDisable(true);  
-    setText(res.data.msg);
+    try {
+      if(id != undefined){
+        const res = await axios.get(`${getServer()}/transaction/${id}`)
+        console.log(res.data.msg)
+        setDisable(true);  
+        setText(res.data.msg);
+      }
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+   
   }
   useEffect(()=>{
     async function updateData(){
@@ -33,7 +42,7 @@ const userName = auth.user.name
       if(auth.user.tokenClaimed){
         setText(res.data.msg);
         setDisable(true);  
-        setUsageText(`http://localhost:5174?userid=${encodeURIComponent(id)}`)
+        setUsageText(`https://open-d.vercel.app?userid=${encodeURIComponent(id)}`)
       }
         
     }updateData()
@@ -57,9 +66,8 @@ const userName = auth.user.name
           {buttonText}
         </button>
       </p>
-      <Link to={usageText} style={{  display: "inline-block", fontweight: "bolder", background: "green", color: "white",   boxShadow: "0.5em 0.5em 3px rgba(0, 0, 0, 0.5)", 
-      border: "1px outset green", textDecoration:"none"
-}} >Click to use your tokens</Link>
+      <Link to={usageText} style={{display: "inline-block", fontweight: "bolder", background: "green", color: "white",   boxShadow: "0.5em 0.5em 3px rgba(0, 0, 0, 0.5)", 
+      border: "1px outset green", textDecoration:"none"}} >Click to use your tokens</Link>
     </div>
   );
 }
